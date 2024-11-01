@@ -4,7 +4,7 @@
 
 <p align="center">
     <b>This is the snap for <a href="https://github.com/NVIDIA/cuda-samples">CUDA Samples</a></b>,
-    <i>"Single-line elevator pitch for your amazing snap"</i>.
+    <i>"Samples for CUDA developers which demonstrates features in CUDA Toolkit"</i>.
     It works on Ubuntu, Fedora, Debian, and other major Linux distributions.
 </p>
 
