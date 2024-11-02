@@ -31,19 +31,10 @@ package-repositories:
     priority: 600
 
 parts:
-  glib-only:
-    source: https://github.com/ubuntu/snapcraft-desktop-helpers.git
-    source-type: git
-    source-subdir: glib-only
-    plugin: make
-    build-packages: [libglib2.0-dev]
-    stage-packages: [libglib2.0-bin]
 
   cuda-samples:
-    after: [glib-only]
     plugin: make
     source: https://github.com/NVIDIA/cuda-samples.git
     source-type: git
     source-tag: v${SNAPCRAFT_PROJECT_VERSION}
     build-packages: [cuda-toolkit]
-    stage-packages: [libglu1-mesa]
