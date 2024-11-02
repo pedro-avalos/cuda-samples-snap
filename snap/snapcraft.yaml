@@ -1,11 +1,12 @@
 name: cuda-samples
 title: CUDA Samples
 version: '12.5'
-summary: Samples for CUDA developers which demonstrates features in CUDA Toolkit
+summary: Samples for CUDA developers which demonstrate features in CUDA Toolkit
 description: |
-  NOTE: This is a wrapper of the official package, but it is not verified, affiliated with, or supported by NVIDIA.
+  NOTE: This is a wrapper of the official package, but it is not verified,
+  affiliated with, or supported by NVIDIA.
 
-  Samples for CUDA developers which demonstrates features in CUDA Toolkit.
+  Samples for CUDA developers which demonstrate features in CUDA Toolkit.
 
 website: https://github.com/NVIDIA/cuda-samples
 contact: https://github.com/pedro-avalos/cuda-samples-snap/issues
