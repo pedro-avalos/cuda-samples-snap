@@ -31,6 +31,10 @@ package-repositories:
     priority: 600
 
 parts:
+  launcher:
+    plugin: dump
+    source: snap/local
+    source-type: local
 
   cuda-samples:
     plugin: make
