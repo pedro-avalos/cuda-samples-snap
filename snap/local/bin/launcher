@@ -1,15 +1,91 @@
 #!/usr/bin/env bash
 
-# Go into the test directory, some samples use local data
-SAMPLES_DIR="$SNAP/usr/share/doc/nvidia-cuda-toolkit/examples/Samples"
-pushd "$SAMPLES_DIR/$TEST_GROUP/$TEST_NAME" > /dev/null || exit 1
+function usage () {
+	echo "usage: $0 [-hla] sample [args ...]"
+	echo
+	echo "positional arguments:"
+	echo "sample  cuda sample to execute"
+	echo "args    optional arguments to pass to the sample"
+	echo
+	echo "options:"
+	echo "-h      show this help message and exit"
+	echo "-l      list the samples available"
+	echo "-a      execute all samples (not implemented)"
+}
 
-# Run the test
-./$TEST_NAME
-ret=$?
+SAMPLES_DIR="$SNAP/usr/local/cuda-samples"
 
-# Return from the data directory
-popd > /dev/null || exit 1
+function list_samples () {
+	echo "$(find "$SAMPLES_DIR" -maxdepth 1 -type f -executable \
+		| sed --expression='s/^.\///g' \
+	)"
+}
 
-# exit with the returncode of the test
-exit $ret
+function exec_sample () {
+	if [[ -z "$1" ]] ; then
+		echo "No sample provided"
+		return 1
+	fi
+
+	sample="$1"
+	args="${@:2}"
+
+	if [[ ! -f "$SAMPLES_DIR/$sample" ]] ; then
+		echo "$sample not found"
+		return 1
+	fi
+
+	pushd "$SAMPLES_DIR" > /dev/null || return 1
+	"$SAMPLES_DIR/$sample" "$args"
+	popd > /dev/null || return 1
+	return $ret
+}
+
+function exec_all () {
+	ret=0
+	while read -r sample ; do
+		name=$(basename -- "$sample")
+		case "$name" in
+			dwtHaar1D)
+				echo "==== SKIPPING $name ===="
+				echo "needs specific arguments"
+				echo
+				;;
+			*)
+				echo "==== RUNNING $name ===="
+				exec_sample "$name"
+				ret=$?
+				if [[ $ret -ne 0 ]] ; then
+					return $ret
+				fi
+				echo
+				;;
+		esac
+	done <<< "$(list_samples)"
+	return $ret
+}
+
+while getopts "hla" opt ; do
+	case ${opt} in
+		h)
+			usage
+			exit
+			;;
+		l)
+			list_samples
+			exit $?
+			;;
+		a)
+			exec_all
+			exit $?
+			;;
+		?)
+			echo "invalid option: -${OPTARG}."
+			usage
+			exit 1
+			;;
+	esac
+done
+
+exec_sample "$1" "${@:2}"
+exit $?
