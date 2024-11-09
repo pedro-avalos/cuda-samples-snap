@@ -36,7 +36,16 @@ parts:
     source: snap/local
     source-type: local
 
+  glib-only:
+    source: https://github.com/ubuntu/snapcraft-desktop-helpers.git
+    source-type: git
+    source-subdir: glib-only
+    plugin: make
+    build-packages: [libglib2.0-dev]
+    stage-packages: [libglib2.0-bin]
+
   cuda-samples:
+    after: [glib-only]
     plugin: make
     source: https://github.com/NVIDIA/cuda-samples.git
     source-type: git
@@ -45,5 +54,22 @@ parts:
       craftctl default
       git apply --ignore-space-change --ignore-whitespace \
         $CRAFT_PROJECT_DIR/snap/local/patches/*.patch
+    build-snaps: [cmake]
     build-packages:
       - cuda-toolkit
+      - libfreeimage-dev
+      - libegl-dev
+      - libgles-dev
+      - libgl-dev
+      - libglut-dev
+      - libglu1-mesa-dev
+      - libvulkan-dev
+      - libmpich-dev
+      - libopenmpi-dev
+      - libglfw3-dev
+    stage-packages:
+      - libglu1-mesa
+      - libfreeimage3
+      - mpich
+    override-build: |
+      make
