@@ -84,7 +84,7 @@ parts:
     override-build: |
       make
       mkdir -p $CRAFT_PART_INSTALL/usr/local/cuda-samples
-      cp -ar bin/x86_64/linux/release/*
+      cp -ar bin/x86_64/linux/release/* \
         $CRAFT_PART_INSTALL/usr/local/cuda-samples/
 
 lint:
