@@ -1,5 +1,15 @@
 #!/usr/bin/env bash
 
-cd $SNAP/usr/share/doc/nvidia-cuda-toolkit/examples/Samples/$TEST_GROUP/$TEST_NAME
+# Go into the test directory, some samples use local data
+SAMPLES_DIR="$SNAP/usr/share/doc/nvidia-cuda-toolkit/examples/Samples"
+pushd "$SAMPLES_DIR/$TEST_GROUP/$TEST_NAME" > /dev/null || exit 1
+
+# Run the test
 ./$TEST_NAME
-cd $OLDPWD
+ret=$?
+
+# Return from the data directory
+popd > /dev/null || exit 1
+
+# exit with the returncode of the test
+exit $ret
