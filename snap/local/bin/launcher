@@ -10,7 +10,7 @@ function usage () {
 	echo "options:"
 	echo "-h      show this help message and exit"
 	echo "-l      list the samples available"
-	echo "-a      execute all samples (not implemented)"
+	echo "-a      execute all samples"
 }
 
 SAMPLES_DIR="$SNAP/usr/local/cuda-samples/bin"
