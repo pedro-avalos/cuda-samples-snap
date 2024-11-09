@@ -1,0 +1,77 @@
+Author: Andreas Beckmann <anbe@debian.org>
+Description: fix detection of unsupported samples
+
+--- a/Samples/5_Domain_Specific/nbody_screen/Makefile
++++ b/Samples/5_Domain_Specific/nbody_screen/Makefile
+@@ -270,17 +270,9 @@ ALL_CCFLAGS += $(addprefix -Xcompiler ,$
+ 
+ SAMPLE_ENABLED := 1
+ 
+-# This sample is not supported on Linux x86_64
+-ifeq ($(TARGET_OS),linux)
+-  ifeq ($(TARGET_ARCH),x86_64)
+-    $(info >>> WARNING - nbody_screen is not supported on Linux x86_64 - waiving sample <<<)
+-    SAMPLE_ENABLED := 0
+-  endif
+-endif
+-
+-# This sample is not supported on Mac OSX
+-ifeq ($(TARGET_OS),darwin)
+-  $(info >>> WARNING - nbody_screen is not supported on Mac OSX - waiving sample <<<)
++# This sample is only supported on QNX
++ifneq ($(TARGET_OS),qnx)
++  $(info >>> WARNING - nbody_screen is only supported on QNX - waiving sample <<<)
+   SAMPLE_ENABLED := 0
+ endif
+ 
+@@ -290,13 +282,6 @@ ifeq ($(TARGET_ARCH),armv7l)
+   SAMPLE_ENABLED := 0
+ endif
+ 
+-# This sample is not supported on aarch64
+-ifeq ($(TARGET_ARCH),aarch64)
+-  ifneq ($(TARGET_OS),qnx)
+-      $(info >>> WARNING - nbody_screen is not supported on aarch64-$(TARGET_OS) - waiving sample <<<)
+-      SAMPLE_ENABLED := 0
+-  endif
+-endif
+ # This sample is not supported on sbsa
+ ifeq ($(TARGET_ARCH),sbsa)
+   $(info >>> WARNING - nbody_screen is not supported on sbsa - waiving sample <<<)
+--- a/Samples/5_Domain_Specific/simpleGLES_screen/Makefile
++++ b/Samples/5_Domain_Specific/simpleGLES_screen/Makefile
+@@ -270,17 +270,9 @@ ALL_CCFLAGS += $(addprefix -Xcompiler ,$
+ 
+ SAMPLE_ENABLED := 1
+ 
+-# This sample is not supported on Linux x86_64
+-ifeq ($(TARGET_OS),linux)
+-  ifeq ($(TARGET_ARCH),x86_64)
+-    $(info >>> WARNING - simpleGLES_screen is not supported on Linux x86_64 - waiving sample <<<)
+-    SAMPLE_ENABLED := 0
+-  endif
+-endif
+-
+-# This sample is not supported on Mac OSX
+-ifeq ($(TARGET_OS),darwin)
+-  $(info >>> WARNING - simpleGLES_screen is not supported on Mac OSX - waiving sample <<<)
++# This sample is only supported on QNX
++ifneq ($(TARGET_OS),qnx)
++  $(info >>> WARNING - simpleGLES_screen is only supported on QNX - waiving sample <<<)
+   SAMPLE_ENABLED := 0
+ endif
+ 
+@@ -290,13 +282,6 @@ ifeq ($(TARGET_ARCH),armv7l)
+   SAMPLE_ENABLED := 0
+ endif
+ 
+-# This sample is not supported on aarch64
+-ifeq ($(TARGET_ARCH),aarch64)
+-  ifneq ($(TARGET_OS),qnx)
+-      $(info >>> WARNING - simpleGLES_screen is not supported on aarch64-$(TARGET_OS) - waiving sample <<<)
+-      SAMPLE_ENABLED := 0
+-  endif
+-endif
+ # This sample is not supported on sbsa
+ ifeq ($(TARGET_ARCH),sbsa)
+   $(info >>> WARNING - simpleGLES_screen is not supported on sbsa - waiving sample <<<)

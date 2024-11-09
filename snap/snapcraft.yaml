@@ -41,4 +41,9 @@ parts:
     source: https://github.com/NVIDIA/cuda-samples.git
     source-type: git
     source-tag: v${SNAPCRAFT_PROJECT_VERSION}
-    build-packages: [cuda-toolkit]
+    override-pull: |
+      craftctl default
+      git apply --ignore-space-change --ignore-whitespace \
+        $CRAFT_PROJECT_DIR/snap/local/patches/*.patch
+    build-packages:
+      - cuda-toolkit

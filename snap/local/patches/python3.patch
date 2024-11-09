@@ -1,0 +1,12 @@
+Author: Andreas Beckmann <anbe@debian.org>
+Description: use python3
+Forwarded: not-needed
+
+--- a/Samples/0_Introduction/matrixMulDynlinkJIT/extras/ptx2c.py
++++ b/Samples/0_Introduction/matrixMulDynlinkJIT/extras/ptx2c.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ from string import *
+ import os, getopt, sys, platform
+ 
