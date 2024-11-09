@@ -82,7 +82,7 @@ parts:
       - libfreeimage3
       - mpich
     override-build: |
-      make
+      make -j$CRAFT_PARALLEL_BUILD_COUNT build
       mkdir -p $CRAFT_PART_INSTALL/usr/local/cuda-samples/bin
-      cp -a bin/x86_64/linux/release/* \
+      cp -ar bin/x86_64/linux/release/* \
         $CRAFT_PART_INSTALL/usr/local/cuda-samples/bin/
