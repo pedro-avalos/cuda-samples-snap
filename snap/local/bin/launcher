@@ -16,6 +16,10 @@ function usage () {
 SAMPLES_DIR="$SNAP/usr/local/cuda-samples"
 
 function list_samples () {
+	if [[ ! -d "$SAMPLES_DIR" ]] ; then
+		echo "list_samples: samples dir $SAMPLES_DIR not found"
+		return 1
+	fi
 	echo "$(find "$SAMPLES_DIR" -maxdepth 1 -type f -executable \
 		| sed --expression='s/^.\///g' \
 	)"
@@ -23,7 +27,7 @@ function list_samples () {
 
 function exec_sample () {
 	if [[ -z "$1" ]] ; then
-		echo "No sample provided"
+		echo "exec_sample: missing required argument -- sample"
 		return 1
 	fi
 
@@ -31,7 +35,7 @@ function exec_sample () {
 	args="${@:2}"
 
 	if [[ ! -f "$SAMPLES_DIR/$sample" ]] ; then
-		echo "$sample not found"
+		echo "exec_sample: sample $sample not found in $SAMPLES_DIR"
 		return 1
 	fi
 
@@ -42,7 +46,13 @@ function exec_sample () {
 }
 
 function exec_all () {
-	ret=0
+	samples="$(list_samples)"
+	ret=$?
+	if [[ $ret -ne 0 ]] ; then
+		echo "$samples"
+		return $ret
+	fi
+
 	while read -r sample ; do
 		name=$(basename -- "$sample")
 		case "$name" in
@@ -61,7 +71,7 @@ function exec_all () {
 				echo
 				;;
 		esac
-	done <<< "$(list_samples)"
+	done <<< "$(samples)"
 	return $ret
 }
 
@@ -79,13 +89,19 @@ while getopts "hla" opt ; do
 			exec_all
 			exit $?
 			;;
-		?)
-			echo "invalid option: -${OPTARG}."
+		*)
 			usage
 			exit 1
 			;;
 	esac
 done
+shift $((OPTIND-1))
+
+if [[ -z "$1" ]] ; then
+	echo "$0: missing position argument -- sample"
+	usage
+	exit 1
+fi
 
 exec_sample "$1" "${@:2}"
 exit $?
