@@ -21,6 +21,16 @@ compression: lzo
 platforms:
   amd64:
 
+apps:
+  cuda-samples:
+    command: bin/launcher
+    plugs:
+      - opengl
+      - network-bind
+      - hardware-observe
+      - home
+      - removable-media
+
 package-repositories:
   - type: apt
     architectures: [amd64]
@@ -73,3 +83,22 @@ parts:
       - mpich
     override-build: |
       make
+      mkdir -p $CRAFT_PART_INSTALL/usr/local/cuda-samples
+      cp -ar bin/x86_64/linux/release/*
+        $CRAFT_PART_INSTALL/usr/local/cuda-samples/
+
+lint:
+  ignore:
+    - library:
+      - usr/lib/x86_64-linux-gnu/libGLU.so*
+      - usr/lib/x86_64-linux-gnu/libOpenEXRUtil-3_1.so*
+      - usr/lib/x86_64-linux-gnu/libefa.so*
+      - usr/lib/x86_64-linux-gnu/libfreeimage-3.18.0.so*
+      - usr/lib/x86_64-linux-gnu/libicuio.so*
+      - usr/lib/x86_64-linux-gnu/libicutest.so*
+      - usr/lib/x86_64-linux-gnu/libmana.so*
+      - usr/lib/x86_64-linux-gnu/libmlx4.so*
+      - usr/lib/x86_64-linux-gnu/libmpichcxx.so*
+      - usr/lib/x86_64-linux-gnu/libmpichfort.so*
+      - usr/lib/x86_64-linux-gnu/libraw_r.so*
+      - usr/lib/x86_64-linux-gnu/libucs_signal.so*
