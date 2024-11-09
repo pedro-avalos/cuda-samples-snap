@@ -13,7 +13,7 @@ function usage () {
 	echo "-a      execute all samples (not implemented)"
 }
 
-SAMPLES_DIR="$SNAP/usr/local/cuda-samples"
+SAMPLES_DIR="$SNAP/usr/local/cuda-samples/bin"
 
 function list_samples () {
 	if [[ ! -d "$SAMPLES_DIR" ]] ; then
