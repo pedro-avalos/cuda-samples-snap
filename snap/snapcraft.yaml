@@ -1,6 +1,6 @@
 name: cuda-samples
 title: CUDA Samples
-version: '12.5'
+version: 12.5
 summary: Samples for CUDA developers which demonstrate features in CUDA Toolkit
 description: |
   NOTE: This is a wrapper of the official package, but it is not verified,
