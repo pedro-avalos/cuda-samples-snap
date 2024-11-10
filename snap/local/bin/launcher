@@ -49,7 +49,7 @@ function exec_all () {
 	samples="$(list_samples)"
 	ret=$?
 	if [[ $ret -ne 0 ]] ; then
-		echo "$samples"
+		echo "exec_all: error when calling list-samples -- $samples"
 		return $ret
 	fi
 
