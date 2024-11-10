@@ -91,11 +91,12 @@ parts:
       - libglut3.12
       - libopenmpi3t64
       - libglfw3
+      - libpsm-infinipath1
     override-build: |
       make -j$CRAFT_PARALLEL_BUILD_COUNT build
 
-      mkdir -p $CRAFT_PART_INSTALL/usr/local/cuda/samples/bin \
+      mkdir --parents $CRAFT_PART_INSTALL/usr/local/cuda/samples/bin \
         $CRAFT_PART_INSTALL/usr/local/cuda/lib
 
-      cp -ar bin/x86_64/linux/release/* \
+      cp --archive --recursive bin/x86_64/linux/release/* \
         $CRAFT_PART_INSTALL/usr/local/cuda/samples/bin/
