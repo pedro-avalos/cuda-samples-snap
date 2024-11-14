@@ -8,16 +8,14 @@
     It works on Ubuntu, Fedora, Debian, and other major Linux distributions.
 </p>
 
-<!-- Uncomment and modify this when you are provided a build status badge
 <p align="center">
-<a href="https://snapcraft.io/my-snap-name">
-  <img alt="enpass" src="https://snapcraft.io/my-snap-name/badge.svg" />
+<a href="https://snapcraft.io/cuda-samples">
+  <img alt="enpass" src="https://snapcraft.io/cuda-samples/badge.svg" />
 </a>
 <a href="https://snapcraft.io/my-snap-name">
-  <img alt="enpass" src="https://snapcraft.io/my-snap-name/trending.svg?name=0" />
+  <img alt="enpass" src="https://snapcraft.io/cuda-samples/trending.svg?name=0" />
 </a>
 </p>
--->
 
 <p align="center">Published for <img src="https://raw.githubusercontent.com/anythingcodes/slack-emoji-for-techies/gh-pages/emoji/tux.png" align="top" width="24" /> with 💝 by Snapcrafters</p>
 
@@ -27,9 +25,7 @@
 sudo snap install cuda-samples
 ```
 
-<!-- Uncomment and modify this when your snap is available on the store
-[![Get it from the Snap Store](https://snapcraft.io/static/images/badges/en/snap-store-white.svg)](https://snapcraft.io/my-snap-name)
--->
+[![Get it from the Snap Store](https://snapcraft.io/static/images/badges/en/snap-store-white.svg)](https://snapcraft.io/cuda-samples)
 
 ([Don't have snapd installed?](https://snapcraft.io/docs/core/install))
 
