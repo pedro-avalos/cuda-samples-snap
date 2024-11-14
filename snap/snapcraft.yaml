@@ -56,8 +56,29 @@ parts:
     build-packages: [libglib2.0-dev]
     stage-packages: [libglib2.0-bin]
 
+  cuda-libraries:
+    plugin: nil
+    build-packages: [cuda-toolkit]
+    override-build: |
+      mkdir -p $CRAFT_PART_INSTALL/usr/local/cuda/lib
+      cp -ar /usr/local/cuda/lib64/libcublas.so* $CRAFT_PART_INSTALL/usr/local/cuda/lib/
+      cp -ar /usr/local/cuda/lib64/libcublasLt.so* $CRAFT_PART_INSTALL/usr/local/cuda/lib/
+      cp -ar /usr/local/cuda/lib64/libcudart.so* $CRAFT_PART_INSTALL/usr/local/cuda/lib/
+      cp -ar /usr/local/cuda/lib64/libcufft.so* $CRAFT_PART_INSTALL/usr/local/cuda/lib/
+      cp -ar /usr/local/cuda/lib64/libcurand.so* $CRAFT_PART_INSTALL/usr/local/cuda/lib/
+      cp -ar /usr/local/cuda/lib64/libcusolver.so* $CRAFT_PART_INSTALL/usr/local/cuda/lib/
+      cp -ar /usr/local/cuda/lib64/libcusparse.so* $CRAFT_PART_INSTALL/usr/local/cuda/lib/
+      cp -ar /usr/local/cuda/lib64/libnppc.so* $CRAFT_PART_INSTALL/usr/local/cuda/lib/
+      cp -ar /usr/local/cuda/lib64/libnppicc.so* $CRAFT_PART_INSTALL/usr/local/cuda/lib/
+      cp -ar /usr/local/cuda/lib64/libnppif.so* $CRAFT_PART_INSTALL/usr/local/cuda/lib/
+      cp -ar /usr/local/cuda/lib64/libnppist.so* $CRAFT_PART_INSTALL/usr/local/cuda/lib/
+      cp -ar /usr/local/cuda/lib64/libnppisu.so* $CRAFT_PART_INSTALL/usr/local/cuda/lib/
+      cp -ar /usr/local/cuda/lib64/libnvJitLink.so* $CRAFT_PART_INSTALL/usr/local/cuda/lib/
+      cp -ar /usr/local/cuda/lib64/libnvjpeg.so* $CRAFT_PART_INSTALL/usr/local/cuda/lib/
+      cp -ar /usr/local/cuda/lib64/libnvrtc.so* $CRAFT_PART_INSTALL/usr/local/cuda/lib/
+
   cuda-samples:
-    after: [glib-only]
+    after: [glib-only, cuda-libraries]
     plugin: make
     source: https://github.com/NVIDIA/cuda-samples.git
     source-type: git
@@ -95,24 +116,3 @@ parts:
       make -j$CRAFT_PARALLEL_BUILD_COUNT build
       mkdir -p $CRAFT_PART_INSTALL/usr/local/cuda/samples/bin
       cp -ar bin/x86_64/linux/release/* $CRAFT_PART_INSTALL/usr/local/cuda/samples/bin/
-
-  cuda-libraries:
-    plugin: nil
-    build-packages: [cuda-toolkit]
-    override-build: |
-      mkdir -p $CRAFT_PART_INSTALL/usr/local/cuda/lib
-      cp -ar /usr/local/cuda/lib64/libcublas.so* $CRAFT_PART_INSTALL/usr/local/cuda/lib/
-      cp -ar /usr/local/cuda/lib64/libcublasLt.so* $CRAFT_PART_INSTALL/usr/local/cuda/lib/
-      cp -ar /usr/local/cuda/lib64/libcudart.so* $CRAFT_PART_INSTALL/usr/local/cuda/lib/
-      cp -ar /usr/local/cuda/lib64/libcufft.so* $CRAFT_PART_INSTALL/usr/local/cuda/lib/
-      cp -ar /usr/local/cuda/lib64/libcurand.so* $CRAFT_PART_INSTALL/usr/local/cuda/lib/
-      cp -ar /usr/local/cuda/lib64/libcusolver.so* $CRAFT_PART_INSTALL/usr/local/cuda/lib/
-      cp -ar /usr/local/cuda/lib64/libcusparse.so* $CRAFT_PART_INSTALL/usr/local/cuda/lib/
-      cp -ar /usr/local/cuda/lib64/libnppc.so* $CRAFT_PART_INSTALL/usr/local/cuda/lib/
-      cp -ar /usr/local/cuda/lib64/libnppicc.so* $CRAFT_PART_INSTALL/usr/local/cuda/lib/
-      cp -ar /usr/local/cuda/lib64/libnppif.so* $CRAFT_PART_INSTALL/usr/local/cuda/lib/
-      cp -ar /usr/local/cuda/lib64/libnppist.so* $CRAFT_PART_INSTALL/usr/local/cuda/lib/
-      cp -ar /usr/local/cuda/lib64/libnppisu.so* $CRAFT_PART_INSTALL/usr/local/cuda/lib/
-      cp -ar /usr/local/cuda/lib64/libnvJitLink.so* $CRAFT_PART_INSTALL/usr/local/cuda/lib/
-      cp -ar /usr/local/cuda/lib64/libnvjpeg.so* $CRAFT_PART_INSTALL/usr/local/cuda/lib/
-      cp -ar /usr/local/cuda/lib64/libnvrtc.so* $CRAFT_PART_INSTALL/usr/local/cuda/lib/
