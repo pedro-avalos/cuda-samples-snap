@@ -113,6 +113,6 @@ parts:
       - libxxf86vm1
       - mpich
     override-build: |
-      make -j$CRAFT_PARALLEL_BUILD_COUNT build
+      make -j$CRAFT_PARALLEL_BUILD_COUNT
       mkdir -p $CRAFT_PART_INSTALL/usr/local/cuda/samples/bin
       cp -ar bin/x86_64/linux/release/* $CRAFT_PART_INSTALL/usr/local/cuda/samples/bin/
