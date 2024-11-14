@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 function usage () {
-	echo "usage: $0 [-hla] sample [args ...]"
+	echo "usage: cuda-samples [-hla] sample [args ...]"
 	echo
 	echo "positional arguments:"
 	echo "sample  cuda sample to execute"
@@ -56,7 +56,7 @@ function exec_all () {
 	while read -r sample ; do
 		name=$(basename -- "$sample")
 		case "$name" in
-			dwtHaar1D)
+			dwtHaar1D|jpegNPP)
 				echo "==== SKIPPING $name ===="
 				echo "needs specific arguments"
 				echo
