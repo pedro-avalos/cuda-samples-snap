@@ -12,7 +12,7 @@
 <a href="https://snapcraft.io/cuda-samples">
   <img alt="enpass" src="https://snapcraft.io/cuda-samples/badge.svg" />
 </a>
-<a href="https://snapcraft.io/my-snap-name">
+<a href="https://snapcraft.io/cuda-samples">
   <img alt="enpass" src="https://snapcraft.io/cuda-samples/trending.svg?name=0" />
 </a>
 </p>
