@@ -101,17 +101,42 @@ parts:
       - libopenmpi-dev
       - libvulkan-dev
     stage-packages:
+      - libdeflate0
       - libegl1
+      - libevent-core-2.1-7t64
+      - libevent-pthreads-2.1-7t64
       - libfreeimage3
       - libgl1
       - libglfw3
       - libglu1-mesa
       - libglut3.12
+      - libglvnd0
       - libglx0
+      - libgomp1
+      - libhwloc15
+      - libimath-3-1-29t64
+      - libjbig0
+      - libjpeg-turbo8
+      - libjxr0t64
+      - liblcms2-2
+      - liblerc4
+      - libopenexr-3-1-30
+      - libopengl0
+      - libopenjp2-7
       - libopenmpi3t64
+      - libraw23t64
+      - libsharpyuv0
+      - libtiff6
+      - libvulkan1
+      - libwebp7
+      - libwebpmux3
+      - libx11-6
+      - libxau6
+      - libxcb1
+      - libxdmcp6
+      - libxext6
       - libxi6
       - libxxf86vm1
-      - mpich
     override-build: |
       make -j$CRAFT_PARALLEL_BUILD_COUNT
       mkdir -p $CRAFT_PART_INSTALL/usr/local/cuda/samples/bin
