@@ -20,9 +20,7 @@ function list_samples () {
 		echo "list_samples: samples dir $SAMPLES_DIR not found"
 		return 1
 	fi
-	echo "$(find "$SAMPLES_DIR" -maxdepth 1 -type f -executable \
-		| sed --expression='s/^.\///g' \
-	)"
+	echo "$(find "$SAMPLES_DIR" -maxdepth 1 -type f -executable -printf "%f\n")"
 }
 
 function exec_sample () {
