@@ -17,7 +17,7 @@ Description: add install target
 +
 +.PHONY: install
 +install:
-+	find bin/$(TARGET_ARCH)/linux/release -type f -exec install -D "{}" "$(DESTDIR)$(PREFIX)/cuda/samples/bin/{}" \;
++	(cd bin/$(TARGET_ARCH)/linux/release && find . -type f -exec install -D "{}" "$(DESTDIR)$(PREFIX)/cuda/samples/bin/{}" \;)
 +
  %.ph_build :
  	+@$(MAKE) -C $(dir $*) $(MAKECMDGOALS)
