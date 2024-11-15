@@ -3,7 +3,7 @@ Description: add install target
 
 --- a/Makefile
 +++ b/Makefile
-@@ -41,6 +41,18 @@ FILTER_OUT :=
+@@ -41,6 +41,19 @@ FILTER_OUT :=
  
  PROJECTS := $(filter-out $(FILTER_OUT),$(PROJECTS))
  
@@ -17,12 +17,13 @@ Description: add install target
 +
 +.PHONY: install
 +install:
-+	(cd bin/$(TARGET_ARCH)/linux/release && find . -type f -exec install -D "{}" "$(DESTDIR)$(PREFIX)/cuda/samples/bin/{}" \;)
++	mkdir -p $(DESTDIR)$(PREFIX)/cuda/samples/bin
++	cp -ar bin/$(TARGET_ARCH)/linux/release/* $(DESTDIR)$(PREFIX)/cuda/samples/bin/
 +
  %.ph_build :
  	+@$(MAKE) -C $(dir $*) $(MAKECMDGOALS)
  
-@@ -53,9 +65,6 @@ PROJECTS := $(filter-out $(FILTER_OUT),$(PROJECTS))
+@@ -53,9 +66,6 @@ PROJECTS := $(filter-out $(FILTER_OUT),$(PROJECTS))
  %.ph_clobber :
  	+@$(MAKE) -C $(dir $*) clobber $(USE_DEVICE)
  
