@@ -58,7 +58,7 @@ parts:
 
   cuda-samples:
     after: [glib-only]
-    plugin: make
+    plugin: nil
     source: https://github.com/NVIDIA/cuda-samples.git
     source-type: git
     source-tag: v${SNAPCRAFT_PROJECT_VERSION}
@@ -79,6 +79,7 @@ parts:
       - libmpich-dev
       - libopenmpi-dev
       - libvulkan-dev
+      - make
     stage-packages:
       - libdeflate0
       - libegl1
@@ -120,6 +121,7 @@ parts:
       make -j$CRAFT_PARALLEL_BUILD_COUNT
       mkdir -p $CRAFT_PART_INSTALL/usr/local/cuda/samples/bin
       cp -ar bin/x86_64/linux/release/* $CRAFT_PART_INSTALL/usr/local/cuda/samples/bin/
+      craftctl default
 
   cuda-libraries:
     plugin: nil
