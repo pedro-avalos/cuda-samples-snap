@@ -71,7 +71,7 @@ function exec_all () {
 				echo
 				;;
 		esac
-	done <<< "$(samples)"
+	done <<< "$samples"
 	return $ret
 }
 
