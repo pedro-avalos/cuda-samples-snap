@@ -58,7 +58,7 @@ parts:
 
   cuda-samples:
     after: [glib-only]
-    plugin: nil
+    plugin: make
     source: https://github.com/NVIDIA/cuda-samples.git
     source-type: git
     source-tag: v${SNAPCRAFT_PROJECT_VERSION}
@@ -79,7 +79,6 @@ parts:
       - libmpich-dev
       - libopenmpi-dev
       - libvulkan-dev
-      - make
     stage-packages:
       - libdeflate0
       - libegl1
@@ -104,6 +103,8 @@ parts:
       - libopengl0
       - libopenjp2-7
       - libopenmpi3t64
+      - libpsm-infinipath1
+      - libpsm2-2-compat
       - libraw23t64
       - libsharpyuv0
       - libtiff6
@@ -117,11 +118,37 @@ parts:
       - libxext6
       - libxi6
       - libxxf86vm1
-    override-build: |
-      make -j$CRAFT_PARALLEL_BUILD_COUNT
-      mkdir -p $CRAFT_PART_INSTALL/usr/local/cuda/samples/bin
-      cp -ar bin/x86_64/linux/release/* $CRAFT_PART_INSTALL/usr/local/cuda/samples/bin/
-      craftctl default
+    stage:
+      - -usr/lib/x86_64-linux-gnu/libEGL_mesa.so*
+      - -usr/lib/x86_64-linux-gnu/libGLX_mesa.so*
+      - -usr/lib/x86_64-linux-gnu/libOpenEXRCore-3_1.so*
+      - -usr/lib/x86_64-linux-gnu/libOpenEXRUtil-3_1.so*
+      - -usr/lib/x86_64-linux-gnu/libXfixes.so*
+      - -usr/lib/x86_64-linux-gnu/libgbm.so*
+      - -usr/lib/x86_64-linux-gnu/libicui18n.so*
+      - -usr/lib/x86_64-linux-gnu/libicuio.so*
+      - -usr/lib/x86_64-linux-gnu/libicutest.so*
+      - -usr/lib/x86_64-linux-gnu/libicutu.so*
+      - -usr/lib/x86_64-linux-gnu/libmana.so*
+      - -usr/lib/x86_64-linux-gnu/libmlx4.so*
+      - -usr/lib/x86_64-linux-gnu/libmpi_java.so*
+      - -usr/lib/x86_64-linux-gnu/libmpi_mpifh.so*
+      - -usr/lib/x86_64-linux-gnu/libmpi_usempi_ignore_tkr.so*
+      - -usr/lib/x86_64-linux-gnu/libmpi_usempif08.so*
+      - -usr/lib/x86_64-linux-gnu/libompitrace.so*
+      - -usr/lib/x86_64-linux-gnu/libraw_r.so*
+      - -usr/lib/x86_64-linux-gnu/libucs_signal.so*
+      - -usr/lib/x86_64-linux-gnu/libwayland-client.so*
+      - -usr/lib/x86_64-linux-gnu/libwayland-server.so*
+      - -usr/lib/x86_64-linux-gnu/libxcb-dri2.so*
+      - -usr/lib/x86_64-linux-gnu/libxcb-glx.so*
+      - -usr/lib/x86_64-linux-gnu/libxcb-present.so*
+      - -usr/lib/x86_64-linux-gnu/libxcb-randr.so*
+      - -usr/lib/x86_64-linux-gnu/libxcb-shm.so*
+      - -usr/lib/x86_64-linux-gnu/libxcb-sync.so*
+      - -usr/lib/x86_64-linux-gnu/libxcb-xfixes.so*
+      - -usr/lib/x86_64-linux-gnu/libxshmfence.so*
+      - -usr/lib/x86_64-linux-gnu/openmpi/lib/ompi_monitoring_prof.so*
 
   cuda-libraries:
     plugin: nil
