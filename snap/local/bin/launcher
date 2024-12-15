@@ -39,6 +39,7 @@ function exec_sample () {
 
 	pushd "$SAMPLES_DIR" > /dev/null || return 1
 	"$SAMPLES_DIR/$sample" "$args"
+	ret=$?
 	popd > /dev/null || return 1
 	return $ret
 }
