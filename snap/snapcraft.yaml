@@ -123,6 +123,10 @@ parts:
       - libxext6
       - libxi6
       - libxxf86vm1
+    override-build: |
+      craftctl default
+      mkdir -p $CRAFT_PART_INSTALL/usr/local/cuda
+      cp -ar Samples $CRAFT_PART_INSTALL/usr/local/cuda/samples
     stage:
       - -usr/lib/x86_64-linux-gnu/libEGL_mesa.so*
       - -usr/lib/x86_64-linux-gnu/libGLX_mesa.so*
