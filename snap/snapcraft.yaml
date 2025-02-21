@@ -58,7 +58,9 @@ parts:
 
   cuda-samples:
     after: [glib-only]
-    plugin: make
+    plugin: cmake
+    cmake-parameters:
+      - -DCMAKE_CUDA_ARCHITECTURES=all
     source: https://github.com/NVIDIA/cuda-samples.git
     source-type: git
     source-tag: v${SNAPCRAFT_PROJECT_VERSION}
@@ -66,8 +68,11 @@ parts:
       craftctl default
       git apply --ignore-space-change --ignore-whitespace \
         $CRAFT_PROJECT_DIR/snap/local/patches/*.patch
+    build-environment:
+      - CUDACXX: /usr/local/cuda/bin/nvcc
     build-snaps: [cmake]
     build-packages:
+      - make
       - cuda-toolkit
       - libegl-dev
       - libfreeimage-dev
