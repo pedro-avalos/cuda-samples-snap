@@ -1,49 +1,65 @@
 #!/usr/bin/env bash
 
 function usage() {
-    echo "usage: cuda-samples [-hla] sample [args ...]"
+    echo "usage: cuda-samples [-hla] group sample exe [args ...]"
     echo
     echo "positional arguments:"
+    echo "group   group containing the sample to execute"
     echo "sample  cuda sample to execute"
+    echo "exe     name of the sample's executable"
     echo "args    optional arguments to pass to the sample"
     echo
     echo "options:"
     echo "-h      show this help message and exit"
-    echo "-l      list the samples available"
+    echo "-l      list the samples available and exit"
     echo "-a      execute all samples"
 }
 
 SAMPLES_DIR="$SNAP/usr/local/cuda/samples"
 
+# Lists all samples
+# The output is lines with the following format: <group> <sample> <exe>
 function list_samples() {
     if [[ ! -d "$SAMPLES_DIR" ]]; then
         echo "list_samples: samples dir $SAMPLES_DIR not found"
         return 1
     fi
-    echo "$(find "$SAMPLES_DIR" -type f -executable -printf "%P\n")"
+    find "$SAMPLES_DIR" -type f -executable -printf "%P\n" |
+        sed "s|/| |g" |
+        column -t
 }
 
+# Executes a specific sample
+# Args:
+#   group            Name of the group that the sample is in
+#   sample           Name of the sample
+#   exe              Name of the executable in the sample
+#   args (optional)  Any command-line arguments to pass to the sample
 function exec_sample() {
     if [[ -z "$1" ]]; then
         echo "exec_sample: missing required argument -- sample"
         return 1
     fi
 
-    sample="$1"
-    args="${@:2}"
+    group="$1"
+    sample="$2"
+    exe="$3"
+    args="${@:4}"
 
-    if [[ ! -f "$SAMPLES_DIR/$sample" ]]; then
+    if [[ ! -f "$SAMPLES_DIR/$group/$sample/$exe" ]]; then
         echo "exec_sample: sample $sample not found in $SAMPLES_DIR"
         return 1
     fi
 
-    pushd "$SAMPLES_DIR" >/dev/null || return 1
-    "$SAMPLES_DIR/$sample" "$args"
+    pushd "$SAMPLES_DIR/$group/$sample" >/dev/null || return 1
+    "$SAMPLES_DIR/$group/$sample/$exe" "$args"
     ret=$?
     popd >/dev/null || return 1
     return $ret
 }
 
+# Executes all samples
+# Skips samples that require specific arguments
 function exec_all() {
     samples="$(list_samples)"
     ret=$?
@@ -53,16 +69,16 @@ function exec_all() {
     fi
 
     while read -r sample; do
-        name=$(basename -- "$sample")
-        case "$name" in
+        IFS=' ' read -r group sample exe <<<"$sample"
+        case "$sample" in
         dwtHaar1D | jpegNPP)
-            echo "==== SKIPPING $name ===="
+            echo "==== SKIPPING $sample ===="
             echo "needs specific arguments"
             echo
             ;;
         *)
-            echo "==== RUNNING $name ===="
-            exec_sample "$name"
+            echo "==== RUNNING $sample ===="
+            exec_sample "$group" "$sample" "$exe"
             ret=$?
             if [[ $ret -ne 0 ]]; then
                 return $ret
@@ -97,10 +113,22 @@ done
 shift $((OPTIND - 1))
 
 if [[ -z "$1" ]]; then
+    echo "$0: missing position argument -- group"
+    usage
+    exit 1
+fi
+
+if [[ -z "$2" ]]; then
     echo "$0: missing position argument -- sample"
     usage
     exit 1
 fi
 
-exec_sample "$1" "${@:2}"
+if [[ -z "$3" ]]; then
+    echo "$0: missing position argument -- exe"
+    usage
+    exit 1
+fi
+
+exec_sample "$1" "$2" "$3" "${@:4}"
 exit $?
