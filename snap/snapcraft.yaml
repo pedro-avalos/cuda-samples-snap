@@ -116,8 +116,6 @@ parts:
       - libopengl0
       - libopenjp2-7
       - libopenmpi3t64
-      - libpsm-infinipath1
-      - libpsm2-2-compat
       - libraw23t64
       - libsharpyuv0
       - libtiff6
@@ -131,6 +129,9 @@ parts:
       - libxext6
       - libxi6
       - libxxf86vm1
+      - on amd64:
+        - libpsm-infinipath1
+        - libpsm2-2-compat
     override-build: |
       craftctl default
       mkdir -p $CRAFT_PART_INSTALL/usr/local/cuda
