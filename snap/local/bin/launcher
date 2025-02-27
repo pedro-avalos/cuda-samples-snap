@@ -24,9 +24,7 @@ function list_samples() {
         echo "list_samples: samples dir $SAMPLES_DIR not found"
         return 1
     fi
-    find "$SAMPLES_DIR" -type f -executable -printf "%P\n" |
-        sed "s|/| |g" |
-        column -t
+    find "$SAMPLES_DIR" -type f -executable -printf "%P\n" | sed "s|/| |g"
 }
 
 # Executes a specific sample
